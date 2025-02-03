@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<header class="text-center my-5">
+  <h1 class="fw-bold">Welcome to the Student Management System</h1>
+</header>
+
+<div class="container position-relative z-index-1 overflow-hidden">
+  <h2 class="fw-bold mb-4">All Students</h2>
+  {% for student in students %}
+  <div class="card mb-4 shadow-sm">
+    <div class="row g-0">
+      <div
+        class="col-md-3 d-flex align-items-center justify-content-center p-3"
+      >
+        {% if student.photo %}
+        <img
+          src="{{ student.photo.url }}"
+          alt="Student Photo"
+          class="img-thumbnail rounded img-fluid"
+          style="max-width: 150px"
+        />
+        {% else %}
+        <img
+          src="{% static 'images/image.png' %}"
+          alt="Default Photo"
+          class="img-thumbnail rounded img-fluid"
+          style="max-width: 150px"
+        />
+        {% endif %}
+      </div>
+      <div class="col-md-7">
+        <div class="card-body">
+          <h3 class="card-title">{{ student.name }}</h3>
+          <p class="card-text"><strong>Roll:</strong> {{ student.roll }}</p>
+          <p class="card-text">
+            <strong>Department:</strong> {{ student.department }}
+          </p>
+          <p class="card-text"><strong>Email:</strong> {{ student.email }}</p>
+        </div>
+      </div>
+      <div
+        class="col-md-2 d-flex align-items-center justify-content-center gap-2"
+      >
+        <a
+          href="{% url 'update_student' id=student.id %}"
+          class="btn btn-primary"
+          >Edit</a
+        >
+        <a
+          href="{% url 'delete_student' id=student.id %}"
+          class="btn btn-danger"
+          >Delete</a
+        >
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
